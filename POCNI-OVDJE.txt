@@ -1,0 +1,10 @@
+Ovo je potpuna verzija projekta sa vašim fotografijama, README slikama i pripremom za GitHub Pages.
+
+1. Sačuvajte kopiju postojećeg foldera.
+2. Raspakujte sadržaj foldera namjestaj-po-mjeri preko postojećih fajlova projekta, pored package.json.
+3. Sačuvajte postojeći .env.local. Paket ga ne sadrži i ne treba ga brisati.
+4. U VS Code terminalu pokrenite npm ci, pa npm run dev.
+
+Ako želite samo README sa slikama, kopirajte README.md i cijeli docs folder zajedno.
+
+Javna objava još nije izvršena. Za postavke objave pročitajte OBJAVLJIVANJE.md.
