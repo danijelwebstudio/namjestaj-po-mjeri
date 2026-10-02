@@ -199,11 +199,12 @@ export default function BriefWizard({ config, open, onClose }) {
           {!files.length && <p>Nema priloga. Možete poslati upit i bez njih.</p>}
           <label className="brief-check-all"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} /><span>{live ? 'Želim poslati navedene podatke i priloge firmi radi odgovora na upit.' : 'Želim sačuvati ovaj probni upit i priloge na ovom uređaju.'} {live && privacyUrl && <a href={privacyUrl} target="_blank" rel="noopener noreferrer">Informacije o privatnosti</a>}</span></label>
           {live && <SpamCheck onToken={setToken} resetKey={captchaKey} />}
+          <div className="brief-export"><button type="button" className="brief-primary" onClick={send}>{busy ? 'Slanje…' : live ? 'Pošalji upit i zatraži procjenu →' : 'Pošalji probni upit →'}</button></div>
           {busy && <div role="status"><progress max="100" value={progress} /><p>{progress >= 95 ? 'Čekamo potvrdu da su svi podaci sačuvani…' : `Slanje ${progress}%`}</p></div>}
           <details className="brief-backup"><summary>Kopija pregleda za vas</summary><div className="brief-export"><button type="button" onClick={downloadSummary}>Preuzmi pregled ↓</button><button type="button" onClick={copySummary}>Kopiraj pregled</button></div></details>
           <p className="brief-step-note">Konačna ponuda zahtijeva potvrđene mjere i dogovoreno rješenje.</p>
         </>}
-        <div className="brief-step-actions"><button type="button" disabled={step === 0} onClick={() => { setStep((current) => current - 1); setErrors({}); setStatus(''); }}>← Nazad</button>{step < 4 ? <button className="brief-primary" type="submit">{step === 3 ? 'Pregledaj upit' : 'Dalje'} →</button> : <button type="button" className="brief-primary" onClick={send}>{busy ? 'Slanje…' : live ? 'Pošalji upit i zatraži procjenu →' : 'Pošalji probni upit →'}</button>}</div>
+        <div className="brief-step-actions"><button type="button" disabled={step === 0} onClick={() => { setStep((current) => current - 1); setErrors({}); setStatus(''); }}>← Nazad</button>{step < 4 ? <button className="brief-primary" type="submit">{step === 3 ? 'Pregledaj upit' : 'Dalje'} →</button> : <button type="button" onClick={onClose}>Zatvori pregled</button>}</div>
         </fieldset>
       </form>
       <aside className="brief-draft">

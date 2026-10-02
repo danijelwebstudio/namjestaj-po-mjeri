@@ -1,104 +1,238 @@
-# Namještaj po mjeri
+# Custom Furniture Brief & Lead Management System
 
-Web projekat koji pomaže klijentu da objasni šta želi, a stolaru da na jednom mjestu dobije podatke za prvi razgovor i okvirnu procjenu.
+A web application for custom-furniture businesses that helps clients explain what they need and gives the carpenter a structured brief for the first conversation and an initial project assessment.
 
-Klijent bira vrstu namještaja, opisuje prostor, dodaje fotografije i nacrte, označava potrebne usluge i navodi budžet i rok. Stolar u svom sandučetu vidi cijeli upit, kontakt i priloge, prati status i zapisuje dogovor.
+The client selects the type of furniture, describes the space, uploads photos and drawings, chooses required services, and provides an approximate budget and timeline. The business receives the complete inquiry, contact details, and attachments in one inbox, where staff can track status and keep private notes.
 
-## Kako izgleda
+## Screenshots
 
-### Početna stranica
+### Landing page
 
-Predstavljanje usluga, odabranih radova, materijala i procesa saradnje, sa pozivom da klijent opiše svoj projekat.
+Presentation of services, selected work, materials, and the collaboration process, with a clear call to describe a new project.
 
-![Početna stranica sajta Namještaj po mjeri](docs/images/pocetna.png)
+![Custom furniture landing page](docs/images/pocetna.png)
 
-### Formular sa fotografijama i nacrtima
+### Smart brief with photos and drawings
 
-Upitnik vodi klijenta kroz projekat, detalje, usluge i kontakt. Može priložiti postojeći projekat dizajnera i sačuvati nedovršen unos za kasnije.
+The questionnaire guides the client through project details, services, contact information, and attachments. Existing designer plans can be uploaded, and an unfinished brief can be saved locally and continued later.
 
-![Formular sa fotografijom i PDF nacrtom](docs/images/upitnik.png)
+![Smart brief with photo and PDF attachment](docs/images/upitnik.png)
 
-### Radni prostor stolara
+### Carpenter inbox
 
-Lista upita, statusi i detalji izabranog projekta. Fotografije i dokumenti ostaju vezani za odgovarajući upit.
+A workspace for incoming inquiries, statuses, project details, notes, and related attachments.
 
-![Sanduče stolara sa izmišljenim probnim upitom](docs/images/sanduce.png)
+![Carpenter inbox with synthetic demo inquiry](docs/images/sanduce.png)
 
-*Snimci prikazuju stvarni interfejs u lokalnom demo režimu. Ime i kontakt u primjeru su izmišljeni; fotografija uz probni upit služi kao ilustracija.*
+*The screenshots show the real interface in local demo mode. The name and contact information are synthetic demo data.*
 
-## Problem koji projekat rješava
+## The problem
 
-Prvi razgovor o namještaju po mjeri često počinje nepotpunim informacijama: nedostaju dimenzije, fotografije, okvirni budžet ili jasan spisak usluga. Podaci i prilozi stižu kroz više poruka pa ih firma mora naknadno prikupljati.
+The first conversation about custom furniture often starts with incomplete information: dimensions are missing, photos arrive later, the budget is unclear, or the requested services are spread across multiple messages.
 
-Ovaj projekat ih okuplja u jedan pregledan upit. Namjera je da priprema ponude bude jednostavnija, a prvi razgovor konkretniji. Formular ne zamjenjuje stručnu procjenu i završno mjerenje; konačnu cijenu potvrđuje stolar.
+That creates unnecessary back-and-forth before the business can even understand the project.
 
-## Šta je uključeno
+This application collects the relevant information into one structured inquiry. It does not replace professional assessment or final on-site measurements; the carpenter still confirms the final scope and price.
 
-- Izbor namještaja i objekta: stan, kuća, poslovni prostor ili drugo.
-- Dimenzije, materijali, reference, budžet i željeni rok.
-- Višestruki izbor usluga, uključujući demontažu, prijevoz i montažu kada su dostupni za izabrani projekat.
-- Sprat, lift, pristup za dostavu, opcionalna adresa i kontakt.
-- Fotografije prostora i nacrti, skice ili projekti dizajnera.
-- Pregled prije slanja i dugme „Pošalji upit i zatraži procjenu“ u povezanom režimu.
-- Čuvanje nedovršenog unosa zajedno s prilozima na istom uređaju i u istom pregledniku.
-- Sanduče sa pretragom, filterima, statusima, privatnim bilješkama i prilozima.
+## Main features
 
-| Prilozi | Formati | Ograničenje |
+- Furniture and property type selection: apartment, house, commercial space, or other.
+- Project dimensions, materials, references, approximate budget, and preferred timeline.
+- Project-specific service selection, including dismantling, transport, and installation when applicable.
+- Floor, elevator, delivery access, optional address, and contact details.
+- Photo uploads and technical files such as drawings, sketches, or designer plans.
+- Review step before submission.
+- Save-and-continue-later flow for unfinished briefs on the same device and browser.
+- Carpenter inbox with search, filters, statuses, private notes, and attachments.
+- Demo mode for safe local testing without sending real inquiries.
+- Connected Supabase mode for staff authentication, stored inquiries, private files, and server-side submission handling.
+
+## Attachment rules
+
+| Attachment | Supported formats | Limit |
 | --- | --- | --- |
-| Fotografije | JPG/JPEG, PNG, WEBP, HEIC/HEIF | Do 8 fajlova, do 10 MB po fajlu |
-| Nacrti i projekti | PDF, DWG, DXF, SKP i navedeni formati slika | Do 3 fajla, do 25 MB po fajlu |
+| Photos | JPG/JPEG, PNG, WEBP, HEIC/HEIF | Up to 8 files, up to 10 MB each |
+| Drawings and project files | PDF, DWG, DXF, SKP and supported image formats | Up to 3 files, up to 25 MB each |
 
-Svi prilozi zajedno mogu imati do 40 MB. Podržane slike imaju pregled; CAD i 3D fajlovi preuzimaju se za otvaranje u odgovarajućem programu.
+All attachments together can be up to 40 MB.
 
-## Isprobavanje na računaru
+Supported images have an in-app preview. CAD and 3D files are downloaded for opening in the appropriate software.
 
-Preporučeno okruženje: Node.js 24 i npm.
+## Demo mode
+
+The application works without external configuration.
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Otvorite adresu koju Vite ispiše u terminalu. Bez lokalne konfiguracije aplikacija radi u demo režimu: popunite formular, dodajte priloge i pošaljite probni upit. Sanduče otvarate preko linka **Ulaz za stolara** na dnu sajta ili dodavanjem `#/upiti` na adresu.
+Open the URL printed by Vite.
 
-Demo čuva podatke u pregledniku. Nema prijavu i ne prima upite s drugih uređaja. Za lokalno isprobavanje koristite izmišljene podatke.
+Without a local Supabase configuration, the app runs in demo mode. You can complete the brief, attach files, submit a test inquiry, and open the carpenter inbox through **Ulaz za stolara** in the footer or by adding:
 
-Ako već imate `.env.local` povezan sa svojim projektom, sačuvajte ga pri zamjeni fajlova. Da biste privremeno prešli na demo, postavite `VITE_DATA_MODE=demo` i ponovo pokrenite razvojni server.
+```text
+#/upiti
+```
 
-## Povezani režim
+to the application URL.
 
-Aplikacija podržava Supabase prijavu zaposlenih, bazu upita, privatne priloge i serversku funkciju za prijem formulara. Jedan Supabase projekat predstavlja jednu firmu. Ulaz zaposlenima odobrava administrator preko tabele `staff`.
+Demo data is stored in the browser. It does not provide staff authentication and does not receive inquiries from other devices. Use synthetic data when testing.
 
-Uputstvo za početno povezivanje je u [POVEZIVANJE-SUPABASE.md](POVEZIVANJE-SUPABASE.md). Ako ste već podesili bazu i nalog, te korake ne ponavljajte. Kopirajte `.env.example` u `.env.local` samo ako ga još nemate i unesite vrijednosti svog projekta. Koraci za javnu objavu i potrebne postavke nalaze se u [OBJAVLJIVANJE.md](OBJAVLJIVANJE.md). Priprema podataka za obavještenje o privatnosti nalazi se u [PRIVATNOST-NACRT.md](PRIVATNOST-NACRT.md); taj dokument još treba popuniti stvarnim podacima firme.
+If you already have a `.env.local` connected to your own Supabase project, keep that file when replacing project files. To temporarily switch to demo mode, set:
 
-GitHub Actions workflow je pripremljen za GitHub Pages. Javna objava i završna provjera slanja na objavljenoj adresi još nisu završene u ovoj verziji paketa.
+```text
+VITE_DATA_MODE=demo
+```
 
-## Tehnologije i struktura
+and restart the development server.
 
-React, Vite, CSS/Tailwind i Supabase. Demo i sačuvani nedovršeni unosi koriste IndexedDB.
+## Connected Supabase mode
 
-| Folder | Namjena |
+The connected mode supports:
+
+- Supabase authentication for staff.
+- A database-backed inquiry inbox.
+- Private attachments.
+- Server-side brief submission through a Supabase Edge Function.
+- Staff access controlled through the `staff` table.
+- Database migrations and access rules stored with the project.
+
+One Supabase project represents one furniture business.
+
+Setup instructions are available in:
+
+- [`POVEZIVANJE-SUPABASE.md`](POVEZIVANJE-SUPABASE.md)
+- [`OBJAVLJIVANJE.md`](OBJAVLJIVANJE.md)
+- [`PRIVATNOST-NACRT.md`](PRIVATNOST-NACRT.md)
+
+The privacy document is a draft and must be completed with the real business details before production use.
+
+## Architecture
+
+```text
+Client
+  |
+React smart brief
+  |
+Data layer
+  |----------------------|
+Demo mode             Supabase mode
+  |                      |
+IndexedDB             Edge Function
+                         |
+                     PostgreSQL
+                         |
+                  Private file storage
+                         |
+                   Carpenter inbox
+```
+
+## Tech stack
+
+- React 19
+- Vite
+- Tailwind CSS
+- Supabase
+- PostgreSQL
+- Supabase Auth
+- Supabase Edge Functions
+- IndexedDB for local drafts and demo data
+- Node.js built-in test runner
+- GitHub Actions / GitHub Pages workflow
+
+## Project structure
+
+| Path | Purpose |
 | --- | --- |
-| `src/components` | Sekcije prezentacionog sajta |
-| `src/config` | Tekstovi, ponuda i prilagođavanje sadržaja |
-| `src/brief` | Upitnik, prilozi i provjera unosa |
-| `src/inbox` | Prijava i sanduče stolara |
-| `src/data` | Čuvanje podataka i komunikacija sa servisom |
-| `src/assets/images` | Fotografije sajta |
-| `supabase` | Baza, pravila pristupa i funkcija za slanje |
-| `docs/images` | Screenshotovi za ovaj README |
+| `src/components` | Landing-page sections |
+| `src/config` | Business content and project configuration |
+| `src/brief` | Multi-step smart brief, attachments, validation, and file rules |
+| `src/inbox` | Carpenter authentication and inquiry workspace |
+| `src/data` | Local persistence and service communication |
+| `src/assets/images` | Website imagery |
+| `supabase/migrations` | Database schema and access rules |
+| `supabase/functions` | Server-side brief submission |
+| `tests` | Brief, attachment, and server-flow tests |
+| `docs/images` | README screenshots |
 
-## Provjera
+## Environment variables
+
+Copy `.env.example` to `.env.local` only when you want to configure connected mode.
+
+```text
+VITE_DATA_MODE=demo
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+VITE_TURNSTILE_SITE_KEY=
+VITE_PRIVACY_URL=
+```
+
+Never expose a Supabase `service_role` key or a Turnstile secret through a `VITE_` variable.
+
+## Tests
+
+Run the automated test suite with:
+
+```bash
+npm test
+```
+
+The test suite covers:
+
+- Attachment counts, per-file limits, and total upload size.
+- Disallowed file types.
+- File-signature validation for images and PDFs.
+- Required and optional brief fields.
+- Contact validation.
+- Project-specific fields and services.
+- Versioned local drafts.
+- Server-side validation of untrusted payloads.
+- Origin restrictions.
+- Duplicate submission handling.
+- Upload failure cleanup.
+- Recovery when the final commit response is lost.
+
+## Build
 
 ```bash
 npm run build
-node --test tests/*.test.js
 ```
 
-Za ovu verziju prolaze build i postojeći testovi. U Chromiumu su provjereni dodavanje fotografije i PDF-a, čuvanje i ponovno učitavanje unosa s prilozima, probno slanje, otvaranje priloga, čuvanje statusa i bilješke i prikaz na mobilnoj širini. Provjera javnog sajta zahtijeva završenu objavu i podešene servise.
+For a complete local verification:
 
-## Trenutna ograničenja
+```bash
+npm run check
+```
 
-Cijenu određuje firma; automatski obračun nije uključen. Email, SMS i push obavještenja nisu implementirani. Sanduče provjerava nove upite svakih 30 sekundi dok je otvoreno, a povezani režim prikazuje do 200 najnovijih upita. Poslije osvježavanja stranice potrebna je ponovna prijava zaposlenog.
+## GitHub Pages
 
-Sačuvani nedovršeni unos ostaje na istom uređaju i ne šalje se stolaru. Rok čuvanja poslatih podataka treba dogovoriti prije javne upotrebe; automatsko brisanje i antivirus skeniranje priloga nisu uključeni.
+The repository includes a GitHub Actions workflow prepared for GitHub Pages.
+
+The workflow installs dependencies, runs the test suite, builds the application, and deploys the generated `dist` directory.
+
+Public deployment still requires the repository Pages configuration and a final live verification. Demo mode is the recommended public portfolio mode because it does not require production business data or credentials.
+
+## Current limitations
+
+- Final pricing is determined by the business; automatic price calculation is intentionally not included.
+- Email, SMS, and push notifications are not implemented.
+- The inbox checks for new inquiries every 30 seconds while open.
+- Connected mode displays up to the 200 most recent inquiries.
+- Staff must sign in again after a full page refresh.
+- Saved unfinished briefs stay on the same device and are never sent to the carpenter until submitted.
+- Data-retention rules must be defined before production use.
+- Automatic attachment deletion and antivirus scanning are not included.
+
+## Why I built it
+
+Custom-furniture inquiries are a good example of a process that looks simple until real clients start sending information through calls, messages, photos, drawings, and follow-up questions.
+
+I built this project to turn that fragmented process into a structured workflow for both sides:
+
+1. The client gets a guided way to explain the project.
+2. The business gets a consistent brief instead of scattered messages.
+3. Photos and technical documents stay attached to the correct inquiry.
+4. The carpenter can track the inquiry through an internal workspace.
+
+The project demonstrates frontend UX work, client-side persistence, file handling and validation, authentication, PostgreSQL/Supabase integration, server-side submission logic, and automated testing in one practical workflow.
