@@ -1,0 +1,100 @@
+.services-section {
+  background: var(--color-paper);
+  border-top: 1px solid var(--color-line);
+  scroll-margin-top: 24px;
+}
+
+.services-inner {
+  width: min(100%, 1680px);
+  margin-inline: auto;
+  padding: 68px 24px 52px;
+}
+
+.services-intro {
+  display: grid;
+  gap: 23px;
+  margin-bottom: 40px;
+}
+
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin: 0 0 22px;
+  color: var(--color-accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .19em;
+}
+
+.section-eyebrow span { width: 30px; height: 1px; background: currentColor; }
+
+.services-intro h2 {
+  max-width: 620px;
+  margin: 0;
+  font: 500 clamp(42px, 5vw, 66px)/1.06 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -.028em;
+  text-wrap: balance;
+}
+
+.services-description {
+  max-width: 440px;
+  margin: 0;
+  color: #605a54;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.services-featured, .services-more { display: grid; gap: 38px; }
+.services-more { margin-top: 44px; }
+.service-item { min-width: 0; }
+.service-media { aspect-ratio: 4 / 3; overflow: hidden; background: #e8e0d5; }
+.service-media img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.service-copy { padding-top: 19px; }
+
+.service-copy h3 {
+  margin: 0 0 10px;
+  font: 500 30px/1.12 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -.015em;
+}
+
+.service-copy p { max-width: 470px; margin: 0; color: #605a54; font-size: 13px; line-height: 1.85; }
+.services-featured .service-copy h3 { font-size: 36px; }
+.services-featured .service-copy p { font-size: 14px; }
+.service-image-fallback { height: 100%; padding: 24px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 14px; text-align: center; color: var(--color-accent); }
+.service-image-fallback span { font: 400 30px/1.1 'Cormorant Garamond', Georgia, serif; }
+.service-image-fallback small { font: 11px/1.5 'Manrope', sans-serif; overflow-wrap: anywhere; }
+
+.services-closing {
+  display: grid;
+  gap: 17px;
+  margin-top: 52px;
+  padding-top: 27px;
+  border-top: 1px solid var(--color-line);
+}
+
+.services-closing p { margin: 0; max-width: 535px; color: #605a54; font-size: 13px; line-height: 1.85; }
+.services-closing .services-closing-title { color: var(--color-text); font: 500 31px/1.15 'Cormorant Garamond', Georgia, serif; }
+
+@media (min-width: 650px) {
+  .services-inner { padding: 80px 40px 60px; }
+  .services-more { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 26px; }
+}
+
+@media (min-width: 900px) {
+  .services-inner { padding: 96px clamp(36px, 4vw, 64px) 70px; }
+  .services-intro { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); align-items: end; gap: 80px; margin-bottom: 55px; }
+  .services-description { padding-bottom: 4px; }
+  .services-featured { grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); gap: 44px; align-items: start; }
+  .services-featured .service-item:nth-child(even) { margin-top: 62px; }
+  .services-featured .service-media { aspect-ratio: 6 / 5; }
+  .services-featured .service-item:nth-child(even) .service-media { aspect-ratio: 1 / 1; }
+  .services-more { margin-top: 70px; }
+  .services-closing { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 44px; margin-top: 68px; padding-top: 32px; }
+}
+
+@media (min-width: 1100px) {
+  .services-more { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px; }
+  .services-more .service-media { aspect-ratio: 1 / 1; }
+  .services-more .service-copy h3 { font-size: clamp(25px, 2.2vw, 31px); }
+}

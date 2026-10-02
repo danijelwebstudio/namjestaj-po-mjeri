@@ -1,0 +1,33 @@
+.brief-intro { background: var(--color-accent); color: var(--color-paper); scroll-margin-top: 24px; }
+.brief-intro-inner { width: min(100%, 1680px); margin-inline: auto; padding: 68px 24px 48px; }
+.brief-intro-heading { max-width: 720px; }
+.brief-intro-eyebrow { display: flex; align-items: center; gap: 13px; margin: 0 0 24px; color: rgba(248,245,240,.85); font-size: 10px; font-weight: 600; letter-spacing: .19em; }
+.brief-intro-eyebrow span { width: 30px; height: 1px; background: currentColor; }
+.brief-intro-heading h2 { margin: 0 0 22px; font: 400 clamp(43px,5vw,70px)/1.03 'Cormorant Garamond',Georgia,serif; letter-spacing: -.028em; text-wrap: balance; }
+.brief-intro-description { max-width: 550px; margin: 0; color: rgba(248,245,240,.9); font-size: 15px; line-height: 1.85; }
+.brief-intro-note { max-width: 540px; margin: 27px 0 0; padding-left: 19px; border-left: 1px solid rgba(248,245,240,.35); color: rgba(248,245,240,.85); font-size: 13px; line-height: 1.85; }
+.brief-intro-body { display: grid; gap: 34px; margin-top: 45px; }
+.brief-intro-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(248,245,240,.25); }
+.brief-intro-list li { display: grid; grid-template-columns: 38px minmax(0,1fr); gap: 16px; padding: 24px 0; border-bottom: 1px solid rgba(248,245,240,.25); }
+.brief-intro-number { padding-top: 3px; color: rgba(248,245,240,.85); font: 400 25px/1 'Cormorant Garamond',Georgia,serif; }
+.brief-intro-list h3 { margin: 0 0 8px; font: 400 29px/1.12 'Cormorant Garamond',Georgia,serif; }
+.brief-intro-list p { max-width: 500px; margin: 0; color: rgba(248,245,240,.85); font-size: 13px; line-height: 1.8; }
+.brief-intro-action { display: flex; flex-direction: column; align-items: flex-start; gap: 13px; }
+.brief-intro-action button { width: min(100%,330px); min-height: 62px; padding: 12px 22px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border: 1px solid var(--color-paper); background: var(--color-paper); color: var(--color-text); font-size: 13px; font-weight: 650; transition: background .2s,color .2s,transform .2s; }
+.brief-intro-action button:hover { background: transparent; color: var(--color-paper); transform: translateY(-2px); }
+.brief-intro-action button:focus-visible { outline: 2px solid var(--color-paper); outline-offset: 4px; }
+.brief-intro-action small { color: rgba(248,245,240,.85); font-size: 11px; }
+.brief-intro-disclaimer { margin: 42px 0 0; padding-top: 22px; border-top: 1px solid rgba(248,245,240,.25); color: rgba(248,245,240,.85); font-size: 11px; line-height: 1.75; }
+@media (min-width: 650px) {
+  .brief-intro-inner { padding: 80px 40px 55px; }
+  .brief-intro-body { grid-template-columns: minmax(0,1fr) minmax(250px,.6fr); align-items: center; gap: 55px; }
+}
+@media (min-width: 1000px) {
+  .brief-intro-inner { padding: 100px clamp(36px,4vw,64px) 62px; }
+  .brief-intro-heading { max-width: 870px; }
+  .brief-intro-body { grid-template-columns: minmax(0,1.25fr) minmax(280px,.55fr); gap: clamp(70px,9vw,145px); margin-top: 60px; }
+  .brief-intro-list li { grid-template-columns: 50px minmax(0,1fr); gap: 24px; padding-block: 28px; }
+  .brief-intro-list h3 { font-size: 33px; }
+  .brief-intro-action { align-items: stretch; }
+  .brief-intro-action button { width: 100%; }
+}
