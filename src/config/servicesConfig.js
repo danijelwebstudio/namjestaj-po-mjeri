@@ -1,0 +1,62 @@
+// Images already listed for this project. Add the actual JPGs to src/assets/images/.
+// The component controls layout; copy, order and image choices belong here.
+export const servicesConfig = {
+  id: 'sta-radimo',
+  eyebrow: 'ŠTA RADIMO',
+  title: 'Namještaj koji se uklapa u vaš život.',
+  description: 'Od kuhinje u kojoj počinje dan do omiljenog kutka za odmor. Oblik, materijale i svaki detalj prilagođavamo prostoru i ljudima koji ga koriste.',
+  closingTitle: 'Jedan komad ili cijeli enterijer.',
+  closingDescription: 'Kada opremate više prostorija, povezujemo ih izborom materijala, boja i detalja — da vaš dom djeluje kao cjelina.',
+  items: [
+    {
+      id: 'kitchens',
+      label: 'Kuhinje po mjeri',
+      description: 'Raspored koji prati vaše navike. Dovoljno prostora za pripremu, odlaganje i sve što koristite svakog dana.',
+      image: 'kitchen-01.jpg',
+      imageAlt: 'Kuhinja s elementima i radnom površinom po mjeri',
+      imagePosition: 'center',
+      featured: true,
+    },
+    {
+      id: 'wardrobes',
+      label: 'Plakari i garderoberi',
+      description: 'Od poda do plafona, od police do ladice. Mjesto za sve vaše stvari, prilagođeno prostoru koji imate.',
+      image: 'wardrobe-01.jpg',
+      imageAlt: 'Ugradni plakar prilagođen dimenzijama prostorije',
+      imagePosition: 'center',
+      featured: true,
+    },
+    {
+      id: 'living',
+      label: 'TV zidovi i komode',
+      description: 'Skladna cjelina za dnevni boravak, s prostorom za tehniku i odlaganje.',
+      image: 'tv-wall-01.jpg',
+      imageAlt: 'TV zid s komodom i elementima za dnevni boravak',
+      imagePosition: 'center',
+    },
+    {
+      id: 'bathroom',
+      label: 'Kupatilski namještaj',
+      description: 'Ormarići i police koji koriste svaki centimetar i čuvaju urednost prostora.',
+      image: 'bathroom-vanity-01.jpg',
+      imageAlt: 'Kupatilski ormarić s umivaonikom',
+      imagePosition: 'center',
+    },
+    {
+      id: 'dining',
+      label: 'Stolovi i trpezarije',
+      description: 'Dimenzije, oblik i završna obrada za svakodnevne obroke i velika okupljanja.',
+      image: 'dining-set-01.jpg',
+      imageAlt: 'Trpezarijski sto sa stolicama',
+      imagePosition: 'center',
+    },
+    {
+      id: 'upholstered',
+      label: 'Tapacirani namještaj',
+      description: 'Ugaone garniture, fotelje i taburei za vaš kutak za odmor.',
+      image: 'sectional-sofa-01.jpg',
+      imageAlt: 'Ugaona garnitura u dnevnom boravku',
+      imagePosition: 'center',
+    },
+  ],
+};
