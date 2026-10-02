@@ -1,0 +1,88 @@
+.brief-dialog { width: min(920px, calc(100% - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 0; border: 1px solid var(--color-line); background: var(--color-paper); color: var(--color-text); overflow-y: auto; overscroll-behavior: contain; }
+.brief-dialog::backdrop { background: #24211ebd; }
+.brief-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 32px; background: var(--color-text); color: var(--color-paper); }
+.brief-dialog-header > span { font-size: 10px; letter-spacing: .14em; }
+.brief-dialog-header button { padding: 10px; border: 1px solid #ffffff66; background: none; color: inherit; font-size: 12px; }
+.brief-dialog-header button:focus-visible { outline-color: white; }
+.brief-dialog-content { padding: 32px 48px; }
+.brief-progress { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 8px; padding: 0; margin: 0 0 36px; list-style: none; }
+.brief-progress li { border-top: 2px solid var(--color-line); padding-top: 12px; font-size: 11px; color: #605a54; }
+.brief-progress li[aria-current], .brief-progress li[data-complete='true'] { border-color: var(--color-accent); color: var(--color-accent); }
+.brief-progress li[aria-current] { font-weight: 700; }
+.brief-progress span { display: block; font-size: 10px; margin-bottom: 5px; }
+.brief-kicker { margin: 0 0 12px; font-size: 10px; letter-spacing: .15em; color: var(--color-accent); }
+.brief-dialog h2 { margin: 0 0 16px; font: 500 clamp(36px,5vw,52px)/1.1 'Cormorant Garamond',Georgia,serif; letter-spacing: -.02em; }
+.brief-dialog h2:focus { outline: none; }
+.brief-step-note { max-width: 620px; margin: 0 0 28px; font-size: 13px; line-height: 1.8; color: #605a54; }
+.brief-fields { display: grid; gap: 22px; }
+.brief-field label { display: block; margin-bottom: 9px; font-size: 13px; font-weight: 600; }
+.brief-field input, .brief-field select, .brief-field textarea { display: block; width: 100%; min-height: 48px; padding: 12px 14px; border: 1px solid #a69c91; border-radius: 0; background: var(--color-paper); color: var(--color-text); font: inherit; font-size: 16px; }
+.brief-field textarea { resize: vertical; }
+.brief-field :is(input,select,textarea):focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.brief-field [aria-invalid='true'] { border-color: #99362b; }
+.brief-error { margin: 7px 0 0; font-size: 12px; color: #99362b; }
+.brief-checklist { margin: 4px 0 0; padding: 0; border: 0; }
+.brief-checklist legend { padding: 0; font-size: 13px; font-weight: 600; }
+.brief-checklist > p { margin: 8px 0 16px; color: #605a54; font-size: 12px; line-height: 1.65; }
+.brief-checklist label { cursor: pointer; }
+.brief-checklist input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--color-accent); flex: 0 0 auto; }
+.brief-check-all { display: flex; gap: 13px; padding: 16px; margin-bottom: 10px; border: 1px solid var(--color-accent); background: #7057470a; }
+.brief-check-all span { display: flex; flex-direction: column; gap: 4px; }
+.brief-check-all strong { font-size: 13px; }
+.brief-check-all small { color: #605a54; font-size: 11px; line-height: 1.5; }
+.brief-check-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.brief-check-grid label { display: flex; align-items: flex-start; gap: 13px; min-height: 58px; padding: 16px; border: 1px solid var(--color-line); font-size: 13px; line-height: 1.45; }
+.brief-check-grid label:has(input:checked) { border-color: var(--color-accent); background: #7057470a; }
+.brief-other { display: block; margin: 20px 0 9px; font-size: 13px; font-weight: 600; }
+.brief-checklist textarea { display: block; width: 100%; padding: 12px 14px; border: 1px solid #a69c91; border-radius: 0; background: var(--color-paper); color: var(--color-text); font: inherit; font-size: 16px; resize: vertical; }
+.brief-checklist textarea:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.brief-step-actions { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--color-line); margin-top: 32px; padding-top: 24px; }
+.brief-step-actions button, .brief-export button { min-height: 48px; padding: 12px 20px; border: 1px solid var(--color-text); background: transparent; color: var(--color-text); font-size: 13px; }
+.brief-dialog .brief-primary { background: var(--color-text); color: var(--color-paper); }
+.brief-dialog .brief-primary:hover { background: var(--color-accent); }
+.brief-step-actions button:disabled { opacity: .4; cursor: default; }
+.brief-draft { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-line); }
+.brief-draft p { font-size: 11px; line-height: 1.8; color: #605a54; }
+.brief-draft > div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
+.brief-draft button { min-height: 44px; padding: 8px 0; border: 0; background: none; color: var(--color-accent); font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
+.brief-clear { padding: 14px; margin-top: 12px; background: var(--color-background); font-size: 12px; }
+.brief-status { min-height: 20px; }
+.brief-form-body { border: 0; padding: 0; margin: 0; min-width: 0; }
+.brief-form-body:disabled { opacity: .65; }
+.brief-demo-banner { padding: 14px 18px; background: #eae0d3; border-left: 3px solid var(--color-accent); font-size: 12px; line-height: 1.7; }
+.brief-attachments h3 { margin: 25px 0 8px; font: 500 29px/1.1 'Cormorant Garamond',Georgia,serif; }
+.brief-attachments p { font-size: 12px; line-height: 1.7; color: #605a54; }
+.attachment-drop { display: flex; flex-direction: column; gap: 14px; border: 1px dashed var(--color-accent); background: #70574708; padding: 22px; font-size: 13px; cursor: pointer; }
+.attachment-drop input { max-width: 100%; font-size: 12px; }
+.attachment-grid { display: grid; gap: 12px; margin: 15px 0; grid-template-columns: repeat(2,minmax(0,1fr)); }
+.attachment-card { display: flex; align-items: center; gap: 12px; border: 1px solid var(--color-line); padding: 12px; min-width: 0; }
+.attachment-card img { width: 66px; height: 66px; object-fit: cover; }
+.attachment-card > div { min-width: 0; }
+.attachment-card strong { display: block; overflow-wrap: anywhere; font-size: 12px; }
+.attachment-card small { display: block; margin: 5px 0; font-size: 10px; }
+.attachment-card a, .attachment-card button { font-size: 11px; color: var(--color-accent); background: none; border: 0; text-decoration: underline; padding: 5px 3px; }
+.attachment-icon { flex: 0 0 auto; padding: 10px; background: #eae0d3; font-size: 10px; }
+.brief-receipt { padding-block: 40px; }
+.brief-receipt p { line-height: 1.8; font-size: 14px; }
+.brief-receipt a { display: block; color: var(--color-accent); margin: 25px 0; }
+.brief-receipt button { border: 1px solid var(--color-text); padding: 12px 22px; background: none; }
+.brief-backup { margin: 20px 0; font-size: 12px; }
+.brief-backup summary { cursor: pointer; margin-bottom: 12px; }
+.brief-dialog progress { width: 100%; accent-color: var(--color-accent); }
+.inbox-entry { padding: 22px; text-align: center; font-size: 12px; }
+.inbox-entry a { color: var(--color-accent); }
+.brief-summary { margin: 0 0 28px; }
+.brief-summary > div { display: grid; grid-template-columns: 170px minmax(0,1fr); gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--color-line); font-size: 13px; line-height: 1.7; }
+.brief-summary dt { font-weight: 600; }
+.brief-summary dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.brief-export { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+@media (max-width: 600px) {
+  .brief-dialog { width: 100%; max-width: 100%; max-height: 100dvh; height: 100dvh; border: 0; }
+  .brief-dialog-header { padding: 14px 20px; }
+  .brief-dialog-content { padding: 26px 20px; }
+  .brief-progress { gap: 6px; margin-bottom: 28px; }
+  .brief-progress li { font-size: 10px; }
+  .brief-summary > div { grid-template-columns: 1fr; gap: 3px; }
+  .brief-check-grid { grid-template-columns: 1fr; }
+  .attachment-grid { grid-template-columns: 1fr; }
+}
