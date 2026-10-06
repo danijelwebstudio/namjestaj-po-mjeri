@@ -9,6 +9,6 @@ export const briefIntroConfig = {
     { id: 'information', number: '02', title: 'Šta već imate', description: 'Mjere, fotografije, skica ili samo početna ideja.' },
     { id: 'expectations', number: '03', title: 'Šta vam je važno', description: 'Prioriteti, okvirni budžet, željeni rok i potrebne usluge.' },
   ],
-  action: { label: 'Započni svoj projekat', helper: '5 kratkih koraka · bez automatskog slanja', pendingMessage: 'Smart Project Brief' },
+  action: { label: 'Započni svoj projekat', helper: '5 kratkih koraka · pregled prije slanja', pendingMessage: 'Smart Project Brief' },
   disclaimer: 'Upit služi za pripremu razgovora. Konačna ponuda zahtijeva potvrđene mjere i dogovoreno rješenje.',
 };

@@ -20,7 +20,7 @@ export default function BriefIntro({ config, onStart }) {
             ))}
           </ol>
           <div className="brief-intro-action">
-            <button type="button" onClick={() => onStart(config.action.pendingMessage)}>
+            <button type="button" onClick={onStart}>
               <span>{config.action.label}</span><span aria-hidden="true">↗</span>
             </button>
             <small>{config.action.helper}</small>

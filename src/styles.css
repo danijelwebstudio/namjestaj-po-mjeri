@@ -58,8 +58,6 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--color-accent); 
 .placeholder-title { max-width: 570px; font: 400 clamp(43px, 6vw, 90px)/1.04 'Cormorant Garamond', Georgia, serif; letter-spacing: -.035em; }
 .placeholder-title em { font-weight: 400; }
 .image-caption { position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-between; gap: 15px; padding: 16px clamp(24px, 3vw, 40px); color: white; background: linear-gradient(transparent, #24211e88); font-size: 9px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; pointer-events: none; }
-.notice { position: fixed; z-index: 10; bottom: 22px; left: 50%; transform: translateX(-50%); width: min(460px, calc(100% - 32px)); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 18px; background: var(--color-text); color: var(--color-paper); box-shadow: 0 12px 25px #24211e40; font-size: 12px; line-height: 1.5; }
-.notice button { color: inherit; border: 0; background: none; font-size: 20px; line-height: 1; }
 @media (min-width: 650px) { .hero-copy { padding: 64px 40px 46px; } .hero-visual { margin-inline: 40px; } }
 @media (min-width: 900px) { .hero { grid-template-columns: minmax(0, 44%) minmax(0, 56%); min-height: clamp(620px, calc(100svh - 150px), 800px); padding: 30px clamp(36px, 4vw, 64px); } .hero-copy { padding: 45px clamp(32px, 4vw, 64px) 45px 0; } .hero h1 { font-size: clamp(65px, 5.6vw, 88px); } .hero-visual { margin: 0; height: auto; min-height: 560px; } }
 @media (min-width: 1024px) { .desktop-nav { display: flex; } .header-cta { display: inline-flex; } .menu-toggle { display: none; } }

@@ -41,11 +41,22 @@ This application collects the relevant information into one structured inquiry. 
 - Project-specific service selection, including dismantling, transport, and installation when applicable.
 - Floor, elevator, delivery access, optional address, and contact details.
 - Photo uploads and technical files such as drawings, sketches, or designer plans.
+- Optional project stage, existing documentation, and collaboration with a designer/architect — within the existing five-step brief.
+- Transparent, deterministic **lead readiness score (0–100)** with missing inputs and strengths visible to the carpenter.
+- Configurable **budget/request mismatch** warnings for specific combinations of demands; these are prompts to clarify, never quotes or automated price estimates.
 - Review step before submission.
 - Save-and-continue-later flow for unfinished briefs on the same device and browser.
 - Carpenter inbox with search, filters, statuses, private notes, and attachments.
 - Demo mode for safe local testing without sending real inquiries.
-- Connected Supabase mode for staff authentication, stored inquiries, private files, and server-side submission handling.
+- Connected Supabase mode for staff authentication with persisted/refreshable sessions, stored inquiries, private files, and server-side submission handling.
+
+## What makes this different from a normal contact form
+
+A normal contact form collects a name and a message. This system structures a real project before the first conversation: furniture category, space, rough dimensions, budget, timetable, project stage, documentation, delivery access, and requested services. Reference photos, sketches, CAD files and PDFs remain attached to **the same inquiry**.
+
+The carpenter inbox shows a **readiness/completeness score** and explanations for what is provided or missing, plus conservative warnings when a configurable combination of low budget and ambitious requirements merits follow-up. The staff can update the lead status and keep private notes without searching across chat threads. The score does **not** classify a person's seriousness and does not calculate furniture prices.
+
+Score weights, thresholds, budget options and mismatch triggers are maintained in `shared/projectBriefConfig.js`; the pure calculation lives in `src/brief/qualification.js`. A professional drawing, architect, and designer are *not* required to submit or achieve a useful score.
 
 ## Attachment rules
 
@@ -147,14 +158,15 @@ IndexedDB             Edge Function
 | --- | --- |
 | `src/components` | Landing-page sections |
 | `src/config` | Business content and project configuration |
-| `src/brief` | Multi-step smart brief, attachments, validation, and file rules |
+| `src/brief` | Multi-step brief, transparent scoring, attachments, and frontend file rules |
 | `src/inbox` | Carpenter authentication and inquiry workspace |
-| `src/data` | Local persistence and service communication |
+| `src/data` | Local persistence, session refresh, and service communication |
 | `src/assets/images` | Website imagery |
 | `supabase/migrations` | Database schema and access rules |
 | `supabase/functions` | Server-side brief submission |
 | `tests` | Brief, attachment, and server-flow tests |
 | `docs/images` | README screenshots |
+| `docs/IMAGE-SOURCES.md` | Demo image inventory and licensing verification checklist |
 
 ## Environment variables
 
@@ -179,6 +191,11 @@ npm test
 ```
 
 The test suite covers:
+
+- Readiness scoring, all score bands, missing fields, warnings and plans/photos.
+- Optional stage/documentation/designer metadata in summaries and server checks.
+- Session restoration, refresh-token rotation, and logout.
+- Upload-policy parity between Edge Function and frontend.
 
 - Attachment counts, per-file limits, and total upload size.
 - Disallowed file types.
@@ -205,13 +222,17 @@ For a complete local verification:
 npm run check
 ```
 
+## Demo imagery and commercial licensing
+
+The existing image set is retained unchanged. It may contain third-party reference imagery with unknown source/licensing. Consult [`docs/IMAGE-SOURCES.md`](docs/IMAGE-SOURCES.md) and **verify or replace every demo photo before commercial use**. This portfolio demo does not claim those spaces are completed client projects.
+
 ## GitHub Pages
 
 The repository includes a GitHub Actions workflow prepared for GitHub Pages.
 
 The workflow installs dependencies, runs the test suite, builds the application, and deploys the generated `dist` directory.
 
-Public deployment still requires the repository Pages configuration and a final live verification. Demo mode is the recommended public portfolio mode because it does not require production business data or credentials.
+The build uses `PAGES_BASE_PATH` from GitHub Actions for the repository subpath and `/` for local development. Both root and subpath entry points use the same hash-based `#/upiti` inbox route. Public deployment still requires the repository Pages configuration and a final live verification. Demo mode is the recommended public portfolio mode because it does not require production business data or credentials.
 
 ## Current limitations
 
@@ -219,7 +240,7 @@ Public deployment still requires the repository Pages configuration and a final 
 - Email, SMS, and push notifications are not implemented.
 - The inbox checks for new inquiries every 30 seconds while open.
 - Connected mode displays up to the 200 most recent inquiries.
-- Staff must sign in again after a full page refresh.
+- Staff sessions persist across refresh with rotating refresh tokens. Signing out clears locally stored tokens. Local storage must only be used on a trusted device; live browser sessions still require real infrastructure testing.
 - Saved unfinished briefs stay on the same device and are never sent to the carpenter until submitted.
 - Data-retention rules must be defined before production use.
 - Automatic attachment deletion and antivirus scanning are not included.

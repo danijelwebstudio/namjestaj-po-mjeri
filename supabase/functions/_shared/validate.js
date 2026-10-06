@@ -1,6 +1,6 @@
-import { businessConfig } from '../../../src/config/businessConfig.js';
-import { emptyBrief, parseDraft, serviceOptionsForProject, validateStep } from '../../../src/brief/briefLogic.js';
-import { checkFiles, extension } from '../../../src/brief/fileRules.js';
+import { projectBriefConfig } from '../../../shared/projectBriefConfig.js';
+import { emptyBrief, parseDraft, serviceOptionsForProject, validateStep } from '../../../shared/briefLogic.js';
+import { checkFiles, extension } from './fileRules.js';
 export function validatePayload(payload, files) {
   if (!payload || !/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(payload.id || '')) throw new Error('Neispravan broj zahtjeva. Osvježite stranicu.');
   if (payload.consent !== true) throw new Error('Nedostaje potvrda slanja.');
@@ -13,7 +13,7 @@ export function validatePayload(payload, files) {
   }
   const data = parseDraft(JSON.stringify({ version: 1, data: payload.data }));
   for (const [key, value] of Object.entries(data)) if (typeof value === 'string') data[key] = value.trim();
-  const config = businessConfig.projectBrief;
+  const config = projectBriefConfig;
   for (let index = 0; index < 4; index++) {
     const errors = validateStep(index, data, config);
     if (Object.keys(errors).length) throw new Error(Object.values(errors)[0]);

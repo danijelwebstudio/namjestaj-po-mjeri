@@ -1,5 +1,5 @@
 import { validatePayload, verifySignature } from '../_shared/validate.js';
-import { safeMime, TOTAL_LIMIT, extension } from '../../../src/brief/fileRules.js';
+import { safeMime, TOTAL_LIMIT, extension } from '../_shared/fileRules.js';
 
 const url = Deno.env.get('SUPABASE_URL')!;
 const secret = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;

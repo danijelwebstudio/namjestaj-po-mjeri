@@ -7,7 +7,7 @@ const images = import.meta.glob('/src/assets/images/*.{jpg,jpeg,png,webp}', {
   import: 'default',
 });
 
-export default function Hero({ config }) {
+export default function Hero({ config, onStart }) {
   const [imageMissing, setImageMissing] = useState(false);
   const imageUrl = images[config.imageUrl];
 
@@ -19,9 +19,9 @@ export default function Hero({ config }) {
           <h1 id="hero-title">{config.title}</h1>
           <p className="hero-description">{config.description}</p>
           <div className="hero-actions">
-            <a className="button-primary" href={config.primaryHref}>
+            <button className="button-primary" type="button" onClick={onStart}>
               {config.primaryCta}<span aria-hidden="true">↗</span>
-            </a>
+            </button>
             <a className="button-secondary" href={config.secondaryHref}>
               {config.secondaryCta}<span aria-hidden="true">↗</span>
             </a>

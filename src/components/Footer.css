@@ -1,0 +1,9 @@
+.site-footer { padding: 65px clamp(24px,4vw,64px) 22px; border-top: 1px solid var(--color-line); background: #eae3d9; }
+.footer-inner { max-width: 1500px; margin: 0 auto; display: grid; grid-template-columns: minmax(230px,1.4fr) repeat(2,minmax(160px,1fr)); gap: 40px; }
+.footer-brand-name { font: 500 33px/1 'Cormorant Garamond',Georgia,serif; letter-spacing: .09em; }
+.footer-brand p { max-width: 340px; color: #605a54; font-size: 12px; line-height: 1.8; }
+.footer-inner nav, .footer-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.footer-inner a, .footer-inner button { padding: 0; border: 0; background: transparent; color: var(--color-text); text-decoration: none; text-align: left; font-size: 12px; font-weight: 600; }
+.footer-inner :is(a,button):hover { text-decoration: underline; }
+.footer-bottom { max-width: 1500px; margin: 60px auto 0; padding-top: 18px; border-top: 1px solid var(--color-line); display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; color: #605a54; font-size: 11px; }
+@media (max-width: 720px) { .footer-inner { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 30px; } .footer-brand { grid-column: 1 / -1; } }

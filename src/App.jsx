@@ -10,9 +10,9 @@ import Materials from './components/Materials.jsx';
 import BriefIntro from './components/BriefIntro.jsx';
 import BriefWizard from './brief/BriefWizard.jsx';
 import Inbox from './inbox/Inbox.jsx';
+import Footer from './components/Footer.jsx';
 
 export default function App() {
-  const [notice, setNotice] = useState('');
   const [briefOpen, setBriefOpen] = useState(false);
   const [inbox, setInbox] = useState(window.location.hash.startsWith('#/upiti'));
   useEffect(() => {
@@ -20,10 +20,6 @@ export default function App() {
     window.addEventListener('hashchange', update);
     return () => window.removeEventListener('hashchange', update);
   }, []);
-
-  function openFutureSection(label) {
-    setNotice(`${label} — ovu sekciju dodajemo u narednom koraku.`);
-  }
 
   return (
     <div className="app-shell" style={{
@@ -36,9 +32,9 @@ export default function App() {
     }}>
       {inbox ? <Inbox /> : <>
       <a className="skip-link" href="#main">Preskoči navigaciju</a>
-      <Header config={businessConfig} onFutureSection={openFutureSection} />
+      <Header config={businessConfig} onStart={() => setBriefOpen(true)} />
       <main id="main">
-        <Hero config={businessConfig.hero} />
+        <Hero config={businessConfig.hero} onStart={() => setBriefOpen(true)} />
         <Services config={businessConfig.services} />
         <SelectedWork config={businessConfig.work} />
         <Process config={businessConfig.process} />
@@ -47,14 +43,9 @@ export default function App() {
         <BriefIntro config={businessConfig.briefIntro} onStart={() => setBriefOpen(true)} />
       </main>
       <BriefWizard config={businessConfig.projectBrief} open={briefOpen} onClose={() => setBriefOpen(false)} />
-      <div className="inbox-entry"><a href="#/upiti">Ulaz za stolara →</a></div>
+      <Footer config={businessConfig} onStart={() => setBriefOpen(true)} />
       </>}
-      {notice && (
-        <div className="notice" role="status">
-          <span>{notice}</span>
-          <button type="button" onClick={() => setNotice('')} aria-label="Zatvori obavještenje">×</button>
-        </div>
-      )}
+
     </div>
   );
 }

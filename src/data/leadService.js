@@ -1,3 +1,4 @@
+import { createAuthSession } from './authSession.js';
 import { localStore } from './localStore.js';
 import { safeMime } from '../brief/fileRules.js';
 export const live = import.meta.env.VITE_DATA_MODE === 'supabase';
@@ -6,32 +7,49 @@ const key = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 export const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || '';
 export const privacyUrl = import.meta.env.VITE_PRIVACY_URL || '';
 export const statuses = { new: 'Novi upit', contacted: 'Kontaktiran', measuring: 'Zakazano mjerenje', quoted: 'Ponuda poslata', accepted: 'Prihvaćeno', declined: 'Odbijeno' };
-let session = null;
+function sessionStorage() { try { return typeof window === 'undefined' ? null : window.localStorage; } catch { return null; } }
+const auth = createAuthSession({ base, key, storage: sessionStorage() });
 function configured() {
   if (!base.startsWith('https://') || !key) throw new Error('Nedostaje podešavanje Supabasea. Pogledajte uputstvo u paketu.');
 }
 async function api(path, options = {}, authenticated = true) {
   configured();
-  if (authenticated && !session) throw new Error('Prijavite se ponovo.');
-  const response = await fetch(`${base}${path}`, {
+  const request = async (forceRefresh = false) => fetch(`${base}${path}`, {
     ...options,
-    headers: { apikey: key, ...(authenticated ? { Authorization: `Bearer ${session.access_token}` } : {}), 'Content-Type': 'application/json', ...options.headers },
+    headers: {
+      apikey: key,
+      ...(authenticated ? { Authorization: `Bearer ${await auth.getAccessToken(forceRefresh)}` } : {}),
+      'Content-Type': 'application/json', ...options.headers,
+    },
   });
+  let response = await request();
+  if (authenticated && response.status === 401) response = await request(true);
   const result = await response.json().catch(() => null);
-  if (!response.ok) throw new Error(response.status === 401 ? 'Sesija je istekla. Odjavite se i prijavite ponovo.' : 'Zahtjev nije uspio. Provjerite vezu i dozvole naloga.');
+  if (!response.ok) {
+    if (response.status === 401) { auth.clear(); throw new Error('Sesija je istekla. Prijavite se ponovo.'); }
+    throw new Error(response.status === 403 ? 'Nalog nema dozvolu za ovu radnju.' : 'Zahtjev nije uspio. Provjerite vezu i dozvole naloga.');
+  }
   return result;
 }
+async function verifyStaff() {
+  const staff = await api('/rest/v1/staff?select=user_id');
+  if (!staff?.length) throw new Error('Ovaj nalog nema pristup sandučetu firme.');
+}
 export async function login(email, password) {
-  const result = await api('/auth/v1/token?grant_type=password', { method: 'POST', body: JSON.stringify({ email, password }) }, false);
-  session = result;
-  try {
-    const staff = await api('/rest/v1/staff?select=user_id');
-    if (!staff?.length) throw new Error('Ovaj nalog nema pristup sandučetu firme.');
-  } catch (error) { session = null; throw error; }
+  configured();
+  await auth.login(email, password);
+  try { await verifyStaff(); } catch (error) { auth.clear(); throw error; }
 }
-export async function logout() {
-  try { if (session) await api('/auth/v1/logout', { method: 'POST' }); } finally { session = null; }
+export async function restoreLogin() {
+  if (!live || !auth.hasSession()) return false;
+  // Re-check membership on every reload; local storage is not proof of authorization.
+  try { await verifyStaff(); return true; }
+  catch (error) {
+    if (/Sesija je istekla|Prijavite se ponovo|nema pristup|nema dozvolu/.test(error.message)) auth.clear();
+    throw error;
+  }
 }
+export async function logout() { await auth.logout(); }
 export async function submitLead({ id, data, files, token, onProgress }) {
   const reference = `PM-${id.slice(0, 8).toUpperCase()}`;
   if (!live) {

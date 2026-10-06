@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function Header({ config, onFutureSection }) {
+export default function Header({ config, onStart }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -19,10 +19,6 @@ export default function Header({ config, onFutureSection }) {
     };
   }, [menuOpen]);
 
-  function navigateToFuture(label) {
-    setMenuOpen(false);
-    onFutureSection(label);
-  }
 
   return (
     <header className="site-header">
@@ -39,17 +35,13 @@ export default function Header({ config, onFutureSection }) {
         </a>
 
         <nav className="desktop-nav" aria-label="Glavna navigacija">
-          {config.navigation.map((item) => item.href ? (
-            <a key={item.id} href={item.href}>{item.label}</a>
-          ) : (
-            <button key={item.id} type="button" onClick={() => navigateToFuture(item.label)}>{item.label}</button>
-          ))}
+          {config.navigation.map((item) => <a key={item.id} href={item.href}>{item.label}</a>)}
         </nav>
 
         <div className="header-actions">
-          <a className="header-cta" href={`#${config.briefIntro.id}`}>
+          <button className="header-cta" type="button" onClick={onStart}>
             Započni projekat <span aria-hidden="true">↗</span>
-          </a>
+          </button>
           <button
             className="menu-toggle"
             type="button"
@@ -65,14 +57,10 @@ export default function Header({ config, onFutureSection }) {
 
       {menuOpen && (
         <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobilna navigacija">
-          {config.navigation.map((item) => item.href ? (
-            <a key={item.id} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}<span aria-hidden="true">↗</span></a>
-          ) : (
-            <button key={item.id} type="button" onClick={() => navigateToFuture(item.label)}>{item.label}<span aria-hidden="true">↗</span></button>
-          ))}
-          <a className="mobile-nav-cta" href={`#${config.briefIntro.id}`} onClick={() => setMenuOpen(false)}>
+          {config.navigation.map((item) => <a key={item.id} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}<span aria-hidden="true">↗</span></a>)}
+          <button className="mobile-nav-cta" type="button" onClick={() => { setMenuOpen(false); onStart(); }}>
             Započni projekat <span aria-hidden="true">↗</span>
-          </a>
+          </button>
         </nav>
       )}
     </header>

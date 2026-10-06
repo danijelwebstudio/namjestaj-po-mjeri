@@ -181,15 +181,17 @@ export default function BriefWizard({ config, open, onClose }) {
       <form onSubmit={advance} noValidate>
         <fieldset className="brief-form-body" disabled={busy}>
         <div className="brief-fields">
-          {step === 0 && <>{field('projectType', 'Vrsta projekta *', { options: config.projectTypes })}{field('location', 'Grad / mjesto *', { autoComplete: 'address-level2', placeholder: 'Npr. Novi Sad' })}{field('propertyType', 'Vrsta objekta *', { options: ['Kuća', 'Stan', 'Poslovni prostor', 'Drugo'] })}</>}
+          {step === 0 && <>{field('projectType', 'Vrsta projekta *', { options: config.projectTypes })}{field('location', 'Grad / mjesto *', { autoComplete: 'address-level2', placeholder: 'Npr. Novi Sad' })}{field('propertyType', 'Vrsta objekta *', { options: config.propertyTypes })}</>}
           {step === 1 && <>
             {field('dimensions', 'Okvirne dimenzije (cm)', { placeholder: 'Širina × visina × dubina ili opis prostora', multiline: true })}
             {field('materials', 'Materijali i izgled', { placeholder: 'Boje, površine ili „treba mi preporuka“', multiline: true })}
             {Object.entries(detailCopy).filter(([key]) => details.includes(key)).map(([key, [label, placeholder]]) => field(key, label, { placeholder, multiline: true }))}
+            {field('documentation', 'Šta trenutno imate od dokumentacije?', { options: config.documentationOptions })}
+            {field('designerStatus', 'Da li već sarađujete sa arhitektom ili dizajnerom?', { options: config.designerOptions })}
             {field('references', 'Linkovi za inspiraciju / opis ideje', { placeholder: 'Pinterest, Instagram ili opis onoga što vam se dopada…', multiline: true })}
             <Attachments files={files} onChange={setFiles} />
           </>}
-          {step === 2 && <>{field('budget', 'Okvirni budžet *', { options: config.budgetRanges })}{field('timeline', 'Željeni rok *', { options: ['U naredna 1–3 mjeseca', 'U naredna 3–6 mjeseci', 'Kasnije', 'Fleksibilan rok / još ne znam'] })}<ServiceChecklist options={serviceOptions} selected={data.services} other={data.servicesOther} onToggle={toggleService} onAll={(checked) => change('services', checked ? serviceOptions.map((item) => item.id) : [])} onOther={(value) => change('servicesOther', value)} /></>}
+          {step === 2 && <>{field('projectStage', 'Faza projekta', { options: config.projectStages })}{field('budget', 'Okvirni budžet *', { options: config.budgetRanges })}{field('timeline', 'Željeni rok *', { options: config.timelines })}<ServiceChecklist options={serviceOptions} selected={data.services} other={data.servicesOther} onToggle={toggleService} onAll={(checked) => change('services', checked ? serviceOptions.map((item) => item.id) : [])} onOther={(value) => change('servicesOther', value)} /></>}
           {step === 2 && <label className="brief-check-all"><input type="checkbox" checked={!!data.servicesUnsure} onChange={(event) => change('servicesUnsure', event.target.checked ? 'yes' : '')} />Nisam siguran koje usluge trebam — želim preporuku</label>}
           {step === 3 && <>{field('floor', 'Sprat / etaža', { placeholder: 'Prizemlje, četvrti sprat, potkrovlje…' })}{field('elevator', 'Da li postoji lift?', { options: ['Da', 'Ne', 'Nije potreban / prizemlje', 'Nisam siguran'] })}{field('access', 'Pristup za dostavu', { placeholder: 'Parking, prilaz kombijem, uzak ulaz ili stepenište…', multiline: true })}{field('address', 'Adresa (opcionalno)', { autoComplete: 'street-address', placeholder: 'Možete je dogovoriti i kasnije' })}{field('name', 'Ime *', { autoComplete: 'name' })}{field('email', 'Email (ili telefon)', { type: 'email', autoComplete: 'email' })}{field('phone', 'Telefon (ili email)', { type: 'tel', autoComplete: 'tel' })}{field('notes', 'Još nešto što treba da znamo?', { multiline: true })}</>}
         </div>

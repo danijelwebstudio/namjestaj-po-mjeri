@@ -47,3 +47,21 @@
 .inbox-alert { padding: 16px; background: #f3ded7; color: #7b271d; }
 @media(max-width:850px) { .inbox-shell { padding-inline: 20px; } .inbox-layout { grid-template-columns: 1fr; } .inbox-list { max-height: 430px; } .inbox-toolbar { grid-template-columns: 1fr 1fr; } .inbox-toolbar label:first-child { grid-column: 1 / -1; } .inbox-detail { padding: 20px; } }
 @media(max-width:450px) { .inbox-top > span { display: none; } .inbox-files { grid-template-columns: 1fr; } .inbox-stats { gap: 30px; } }
+/* Lead readiness indicators intentionally differ from inquiry workflow status badges. */
+.lead-readiness { margin: 26px 0; padding: 21px 23px; border: 1px solid var(--color-line); background: #f1ece5; }
+.inbox-detail .lead-readiness h3 { margin: 0 0 13px; }
+.lead-readiness h4 { margin: 18px 0 9px; font-size: 13px; font-weight: 700; }
+.readiness-heading, .inbox-readiness { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.readiness-heading strong { font: 500 40px 'Cormorant Garamond', Georgia, serif; }
+.inbox-readiness b { font-size: 16px; font-weight: 700; }
+.readiness-label { display: inline-block; padding: 5px 9px; font-size: 11px; background: #e7e3df; color: #4e4a44; }
+.readiness-ready { background: #dce9df; color: #24523b; }
+.readiness-good { background: #eee3cd; color: #76551d; }
+.readiness-early, .readiness-limited { background: #e4dfd7; color: #5d5853; }
+.readiness-note { margin: 0 0 15px; font-size: 12px; line-height: 1.7; color: #605a54; }
+.readiness-points { list-style: none; padding: 0; margin: 6px 0; display: grid; gap: 8px; }
+.readiness-points li { display: flex; align-items: baseline; gap: 9px; font-size: 12px; line-height: 1.5; }
+.readiness-points li span { color: #7c6449; }
+.readiness-points .readiness-positive span { color: #386a4e; }
+.readiness-warning, .inbox-card-warning { padding: 12px; background: #f4e4cb; color: #6a4c19; font-size: 12px; line-height: 1.6; }
+.inbox-card-warning { padding: 5px 8px; }
