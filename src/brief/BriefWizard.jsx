@@ -33,6 +33,7 @@ function ServiceChecklist({ options, selected, other, onToggle, onAll, onOther }
 export default function BriefWizard({ config, open, onClose }) {
   const dialog = useRef(null);
   const heading = useRef(null);
+  const consentRef = useRef(null);
   const [data, setData] = useState({ ...emptyBrief });
   const [step, setStep] = useState(0);
   const [errors, setErrors] = useState({});
@@ -43,6 +44,7 @@ export default function BriefWizard({ config, open, onClose }) {
   const [progress, setProgress] = useState(0);
   const [receipt, setReceipt] = useState(null);
   const [consent, setConsent] = useState(false);
+  const [consentError, setConsentError] = useState('');
   const [token, setToken] = useState('');
   const [captchaKey, setCaptchaKey] = useState(0);
   const submissionId = useRef(crypto.randomUUID());
@@ -104,7 +106,7 @@ export default function BriefWizard({ config, open, onClose }) {
       const raw = stored ? JSON.stringify(stored) : localStorage.getItem(config.storageKey);
       if (!raw) { setStatus('U ovom pregledniku nema sačuvanog nacrta.'); return; }
       setData(parseDraft(raw)); setStep(0); setErrors({}); setConfirmClear(false);
-      setFiles(stored?.files || []); setConsent(false); submissionId.current = crypto.randomUUID();
+      setFiles(stored?.files || []); setConsent(false); setConsentError(''); submissionId.current = crypto.randomUUID();
       setStatus('Sačuvani unos je učitan' + (stored ? ', zajedno sa prilozima.' : '. Stara verzija nije čuvala priloge.'));
     } catch { setStatus('Nacrt nije moguće učitati. Možete nastaviti unos bez njega.'); }
     finally { setBusy(false); }
@@ -114,7 +116,7 @@ export default function BriefWizard({ config, open, onClose }) {
     let cleared = true;
     try { await localStore('drafts', 'delete', config.storageKey); localStorage.removeItem(config.storageKey); } catch { cleared = false; }
     setData({ ...emptyBrief }); setStep(0); setErrors({}); setConfirmClear(false);
-    setFiles([]); setConsent(false); submissionId.current = crypto.randomUUID(); setBusy(false);
+    setFiles([]); setConsent(false); setConsentError(''); submissionId.current = crypto.randomUUID(); setBusy(false);
     setStatus(cleared ? 'Unos i sačuvani nacrt su obrisani.' : 'Unos je očišćen, ali preglednik nije dozvolio brisanje sačuvanog nacrta.');
   }
   async function send() {
@@ -125,7 +127,15 @@ export default function BriefWizard({ config, open, onClose }) {
     }
     const fileError = checkFiles(files);
     if (fileError) { setStatus(fileError); return; }
-    if (!consent) { setStatus('Potvrdite da želite poslati navedene podatke i priloge.'); return; }
+    if (!consent) {
+      setConsentError('Označite ovu potvrdu prije slanja upita.');
+      setStatus('');
+      requestAnimationFrame(() => {
+        consentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        consentRef.current?.focus();
+      });
+      return;
+    }
     if (live && !token) { setStatus('Sačekajte provjeru zaštite od spama.'); return; }
     busyRef.current = true; setBusy(true); setProgress(0); setStatus('');
     try {
@@ -141,7 +151,7 @@ export default function BriefWizard({ config, open, onClose }) {
     finally { busyRef.current = false; setBusy(false); setToken(''); setCaptchaKey((value) => value + 1); }
   }
   function newInquiry() {
-    setReceipt(null); setData({ ...emptyBrief }); setFiles([]); setStep(0); setStatus(''); setConsent(false); setErrors({}); submissionId.current = crypto.randomUUID();
+    setReceipt(null); setData({ ...emptyBrief }); setFiles([]); setStep(0); setStatus(''); setConsent(false); setConsentError(''); setErrors({}); submissionId.current = crypto.randomUUID();
   }
   async function copySummary() {
     try { await navigator.clipboard.writeText(summaryText(data, config)); setStatus('Pregled je kopiran. Možete ga zalijepiti u poruku; ništa nije poslato automatski.'); }
@@ -199,7 +209,26 @@ export default function BriefWizard({ config, open, onClose }) {
           <dl className="brief-summary">{summaryRows(data, config).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
           <h3>Prilozi ({files.length})</h3><div className="attachment-grid">{files.map((item) => <AttachmentCard key={item.id} item={item} onRemove={(id) => setFiles(files.filter((file) => file.id !== id))} />)}</div>
           {!files.length && <p>Nema priloga. Možete poslati upit i bez njih.</p>}
-          <label className="brief-check-all"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} /><span>{live ? 'Želim poslati navedene podatke i priloge firmi radi odgovora na upit.' : 'Želim sačuvati ovaj probni upit i priloge na ovom uređaju.'} {live && privacyUrl && <a href={privacyUrl} target="_blank" rel="noopener noreferrer">Informacije o privatnosti</a>}</span></label>
+          <label className={`brief-check-all brief-consent${consentError ? ' brief-consent-error' : ''}`}>
+            <input
+              ref={consentRef}
+              type="checkbox"
+              checked={consent}
+              aria-invalid={!!consentError}
+              aria-describedby={consentError ? 'brief-consent-error' : undefined}
+              onChange={(event) => {
+                setConsent(event.target.checked);
+                if (event.target.checked) setConsentError('');
+                setStatus('');
+              }}
+            />
+            <span>
+              <strong>Potvrda prije slanja *</strong>
+              <small>{live ? 'Želim poslati navedene podatke i priloge firmi radi odgovora na upit.' : 'Želim sačuvati ovaj probni upit i priloge na ovom uređaju.'}</small>
+              {live && privacyUrl && <a href={privacyUrl} target="_blank" rel="noopener noreferrer">Informacije o privatnosti</a>}
+            </span>
+          </label>
+          {consentError && <p className="brief-consent-error-message" id="brief-consent-error" role="alert">{consentError}</p>}
           {live && <SpamCheck onToken={setToken} resetKey={captchaKey} />}
           <div className="brief-export"><button type="button" className="brief-primary" onClick={send}>{busy ? 'Slanje…' : live ? 'Pošalji upit i zatraži procjenu →' : 'Pošalji probni upit →'}</button></div>
           {busy && <div role="status"><progress max="100" value={progress} /><p>{progress >= 95 ? 'Čekamo potvrdu da su svi podaci sačuvani…' : `Slanje ${progress}%`}</p></div>}

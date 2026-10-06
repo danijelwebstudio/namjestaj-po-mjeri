@@ -68,6 +68,13 @@
 .brief-receipt button { border: 1px solid var(--color-text); padding: 12px 22px; background: none; }
 .brief-backup { margin: 20px 0; font-size: 12px; }
 .brief-backup summary { cursor: pointer; margin-bottom: 12px; }
+
+.brief-consent { margin-top: 4px; }
+.brief-consent span { align-items: flex-start; }
+.brief-consent a { display: inline-block; margin-top: 5px; color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+.brief-consent-error { border-color: #99362b; background: #99362b08; }
+.brief-consent-error input { outline: 2px solid #99362b; outline-offset: 2px; }
+.brief-consent-error-message { margin: -2px 0 16px; font-size: 12px; color: #99362b; }
 .brief-dialog progress { width: 100%; accent-color: var(--color-accent); }
 .brief-summary { margin: 0 0 28px; }
 .brief-summary > div { display: grid; grid-template-columns: 170px minmax(0,1fr); gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--color-line); font-size: 13px; line-height: 1.7; }
