@@ -9,7 +9,7 @@ export default function Header({ config, onStart }) {
       if (event.key === 'Escape') setMenuOpen(false);
     };
     const onResize = () => {
-      if (window.innerWidth >= 1024) setMenuOpen(false);
+      if (window.innerWidth >= 700) setMenuOpen(false);
     };
     window.addEventListener('keydown', onKeyDown);
     window.addEventListener('resize', onResize);
@@ -40,7 +40,7 @@ export default function Header({ config, onStart }) {
 
         <div className="header-actions">
           <button className="header-cta" type="button" onClick={onStart}>
-            Započni projekat <span aria-hidden="true">↗</span>
+            {config.hero.primaryCta} <span aria-hidden="true">↗</span>
           </button>
           <button
             className="menu-toggle"
@@ -59,7 +59,7 @@ export default function Header({ config, onStart }) {
         <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobilna navigacija">
           {config.navigation.map((item) => <a key={item.id} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}<span aria-hidden="true">↗</span></a>)}
           <button className="mobile-nav-cta" type="button" onClick={() => { setMenuOpen(false); onStart(); }}>
-            Započni projekat <span aria-hidden="true">↗</span>
+            {config.hero.primaryCta} <span aria-hidden="true">↗</span>
           </button>
         </nav>
       )}
