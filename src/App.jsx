@@ -1,25 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { businessConfig } from './config/businessConfig.js';
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
-import Services from './components/Services.jsx';
 import SelectedWork from './components/SelectedWork.jsx';
 import Process from './components/Process.jsx';
 import Benefits from './components/Benefits.jsx';
-import Materials from './components/Materials.jsx';
 import BriefIntro from './components/BriefIntro.jsx';
 import BriefWizard from './brief/BriefWizard.jsx';
 import Inbox from './inbox/Inbox.jsx';
 import Footer from './components/Footer.jsx';
+import useLandingMotion from './components/useLandingMotion.js';
 
 export default function App() {
   const [briefOpen, setBriefOpen] = useState(false);
   const [inbox, setInbox] = useState(window.location.hash.startsWith('#/upiti'));
+  const landing = useRef(null);
   useEffect(() => {
     const update = () => { setInbox(window.location.hash.startsWith('#/upiti')); setBriefOpen(false); };
     window.addEventListener('hashchange', update);
     return () => window.removeEventListener('hashchange', update);
   }, []);
+
+  useLandingMotion(landing, !inbox, briefOpen);
 
   return (
     <div className="app-shell" style={{
@@ -31,21 +33,18 @@ export default function App() {
       '--color-line': businessConfig.theme.line,
     }}>
       {inbox ? <Inbox /> : <>
-      <a className="skip-link" href="#main">Preskoči navigaciju</a>
-      <Header config={businessConfig} onStart={() => setBriefOpen(true)} />
-      <main id="main">
-        <Hero config={businessConfig.hero} onStart={() => setBriefOpen(true)} />
-        <Services config={businessConfig.services} />
-        <SelectedWork config={businessConfig.work} />
-        <Process config={businessConfig.process} />
-        <Benefits config={businessConfig.benefits} />
-        <Materials config={businessConfig.materials} />
-        <BriefIntro config={businessConfig.briefIntro} onStart={() => setBriefOpen(true)} />
-      </main>
-      <BriefWizard config={businessConfig.projectBrief} open={briefOpen} onClose={() => setBriefOpen(false)} />
-      <Footer config={businessConfig} onStart={() => setBriefOpen(true)} />
+        <a className="skip-link" href="#main">Preskoči navigaciju</a>
+        <Header config={businessConfig} onStart={() => setBriefOpen(true)} />
+        <main id="main" ref={landing}>
+          <Hero config={businessConfig.hero} onStart={() => setBriefOpen(true)} />
+          <SelectedWork config={businessConfig.work} />
+          <Benefits config={businessConfig.benefits} />
+          <Process config={businessConfig.process} />
+          <BriefIntro config={businessConfig.briefIntro} onStart={() => setBriefOpen(true)} />
+        </main>
+        <BriefWizard config={businessConfig.projectBrief} open={briefOpen} onClose={() => setBriefOpen(false)} />
+        <Footer config={businessConfig} />
       </>}
-
     </div>
   );
 }

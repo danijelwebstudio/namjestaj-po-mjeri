@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import CtaButton from './CtaButton.jsx';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Header({ config, onStart }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuToggle = useRef(null);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -9,7 +11,7 @@ export default function Header({ config, onStart }) {
       if (event.key === 'Escape') setMenuOpen(false);
     };
     const onResize = () => {
-      if (window.innerWidth >= 1024) setMenuOpen(false);
+      if (window.innerWidth >= 700) setMenuOpen(false);
     };
     window.addEventListener('keydown', onKeyDown);
     window.addEventListener('resize', onResize);
@@ -39,10 +41,9 @@ export default function Header({ config, onStart }) {
         </nav>
 
         <div className="header-actions">
-          <button className="header-cta" type="button" onClick={onStart}>
-            Započni projekat <span aria-hidden="true">↗</span>
-          </button>
+          <CtaButton className="header-cta" label={config.hero.primaryCta} onClick={onStart} />
           <button
+            ref={menuToggle}
             className="menu-toggle"
             type="button"
             aria-label={menuOpen ? 'Zatvori meni' : 'Otvori meni'}
@@ -58,9 +59,7 @@ export default function Header({ config, onStart }) {
       {menuOpen && (
         <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobilna navigacija">
           {config.navigation.map((item) => <a key={item.id} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}<span aria-hidden="true">↗</span></a>)}
-          <button className="mobile-nav-cta" type="button" onClick={() => { setMenuOpen(false); onStart(); }}>
-            Započni projekat <span aria-hidden="true">↗</span>
-          </button>
+          <CtaButton className="mobile-nav-cta" label={config.hero.primaryCta} onClick={() => { setMenuOpen(false); menuToggle.current?.focus(); onStart(); }} />
         </nav>
       )}
     </header>
