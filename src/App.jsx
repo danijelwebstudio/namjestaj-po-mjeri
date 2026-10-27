@@ -9,6 +9,7 @@ import BriefIntro from './components/BriefIntro.jsx';
 import BriefWizard from './brief/BriefWizard.jsx';
 import Inbox from './inbox/Inbox.jsx';
 import Footer from './components/Footer.jsx';
+import useLandingMotion from './components/useLandingMotion.js';
 
 export default function App() {
   const [briefOpen, setBriefOpen] = useState(false);
@@ -20,31 +21,7 @@ export default function App() {
     return () => window.removeEventListener('hashchange', update);
   }, []);
 
-  useEffect(() => {
-    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (inbox || motion.matches || !('IntersectionObserver' in window)) return undefined;
-    const animations = [];
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        observer.unobserve(entry.target);
-        if (!motion.matches && entry.target.animate) {
-          animations.push(entry.target.animate(
-            [{ opacity: 0.5, transform: 'translateY(14px)' }, { opacity: 1, transform: 'translateY(0)' }],
-            { duration: 420, easing: 'cubic-bezier(.2,.7,.2,1)' },
-          ));
-        }
-      }
-    }, { threshold: 0.12 });
-    landing.current?.querySelectorAll('[data-reveal]').forEach((element) => observer.observe(element));
-    const stopMotion = () => { if (motion.matches) animations.forEach((animation) => animation.cancel()); };
-    motion.addEventListener('change', stopMotion);
-    return () => {
-      observer.disconnect();
-      animations.forEach((animation) => animation.cancel());
-      motion.removeEventListener('change', stopMotion);
-    };
-  }, [inbox]);
+  useLandingMotion(landing, !inbox, briefOpen);
 
   return (
     <div className="app-shell" style={{

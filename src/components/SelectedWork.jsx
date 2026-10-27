@@ -1,3 +1,4 @@
+import MotionTitle from './MotionTitle.jsx';
 import { useState } from 'react';
 import './SelectedWork.css';
 
@@ -8,7 +9,7 @@ const images = import.meta.glob('/src/assets/images/*.{jpg,jpeg,png,webp,JPG,JPE
 function WorkImage({ project }) {
   const [failed, setFailed] = useState(false);
   const src = images[`/src/assets/images/${project.image}`];
-  return <div className="work-image">
+  return <div className="work-image" data-motion="photo">
     {src && !failed ? (
       <img src={src} alt={project.imageAlt} loading="lazy" decoding="async"
         style={{ objectPosition: project.imagePosition || 'center' }} onError={() => setFailed(true)} />
@@ -23,10 +24,10 @@ export default function SelectedWork({ config }) {
     <section className="selected-work" id={config.id} aria-labelledby="work-heading">
       <span className="section-anchor" id="radovi" aria-hidden="true" />
       <div className="section-inner">
-        <div className="work-intro" data-reveal="">
+        <div className="work-intro">
           <div>
             <p className="section-eyebrow"><span aria-hidden="true" />{config.eyebrow}</p>
-            <h2 id="work-heading">{config.title}</h2>
+            <MotionTitle id="work-heading" text={config.title} />
           </div>
           <p className="work-demo-label">{config.demoLabel}</p>
         </div>
@@ -42,7 +43,7 @@ export default function SelectedWork({ config }) {
             </figure>
           ))}
         </div>
-        <p className="work-other">{config.other}</p>
+        <p className="work-other" data-motion="fade">{config.other}</p>
       </div>
     </section>
   );
